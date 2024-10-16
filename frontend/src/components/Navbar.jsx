@@ -15,6 +15,12 @@ const Navbar = () => {
     const [showMenu, setShowMenu] = useState(false);
     const navigate = useNavigate()
 
+    const logout = ()=>{
+        setProviderToken(false)
+  localStorage.removeItem('providerToken')
+  setUserToken(false)
+  localStorage.removeItem('userToken')
+    }
     
 
     return (
@@ -66,7 +72,7 @@ const Navbar = () => {
                                <hr />
                                 <Link onClick={()=>window.scrollTo(0,0)} to={'/add-service'} className='hover:text-mainColor font-medium hover:translate-x-[5px] duration-300 transition-all'>Add Service</Link>
                                 <hr />
-                                <p className='hover:text-mainColor font-medium hover:translate-x-[5px] duration-300 transition-all' onClick={()=>{ window.scrollTo(0,0)}}>Logout</p>
+                                <p className='hover:text-mainColor font-medium hover:translate-x-[5px] duration-300 transition-all' onClick={()=>{ {logout()}; window.scrollTo(0,0)}}>Logout</p>
                             </div>
                         </div>
                     </div>
