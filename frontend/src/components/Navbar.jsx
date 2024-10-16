@@ -16,10 +16,10 @@ const Navbar = () => {
     const navigate = useNavigate()
 
     const logout = ()=>{
-        setProviderToken(false)
-  localStorage.removeItem('providerToken')
-  setUserToken(false)
-  localStorage.removeItem('userToken')
+      providerToken &&  setProviderToken(false)
+  providerToken && localStorage.removeItem('providerToken')
+ userToken && setUserToken(false)
+ userToken && localStorage.removeItem('userToken')
     }
     
 

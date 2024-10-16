@@ -60,4 +60,34 @@ const registerProvider = async(req,res)=>{
     }
 }
 
-export {registerProvider}
+//provider login
+const providerLogin = async (req,res) => {
+    try {
+        const {providerEmail,
+            providerPassword
+        } = req.body
+        // Check provider Exists
+        const provider = await providerModel.findOne({providerEmail})
+        if(!provider){
+            return res.json({success:false, message:'Please enter a valid email'})
+        }
+        // compare password
+        const isMatch = await bcrypt.compare(providerPassword,provider.providerPassword)
+        if(isMatch){
+            // Generate token
+            const token = jwt.sign({ id: provider._id }, process.env.JWT_SECRET);
+            return res.json({success:true,token})
+
+        }
+        else{
+            return res.json({success:false, message:'Please enter correct password'})
+        }
+    } catch (error) {
+        console.log(error)
+        res.json({success:false, message:error.message})
+    }
+}
+
+export {registerProvider,
+    providerLogin
+}
