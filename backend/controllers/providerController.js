@@ -2,6 +2,7 @@ import validator from "validator";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import providerModel from "../models/providerModel.js";
+import {v2 as cloudinary} from 'cloudinary'
 
 const registerProvider = async(req,res)=>{
     try {
@@ -101,7 +102,36 @@ const getProviderProfile = async(req,res)=>{
     }
 }
 
+// update provider profile
+const updateProviderProfile = async (req, res) => {
+    try {
+      const { providerId, providerName, providerPhone, providerAddress, providerBio } = req.body;
+  
+      await providerModel.findByIdAndUpdate(providerId, {
+        providerName,
+        providerPhone,
+        providerAddress: JSON.parse(providerAddress),
+        providerBio
+      });
+  
+      const providerImage = req.file;
+      if (providerImage) {
+        const imageUpload = await cloudinary.uploader.upload(providerImage.path, {
+          resource_type: "image",
+        });
+        const imageUrl = imageUpload.secure_url;
+        await providerModel.findByIdAndUpdate(providerId, { providerImage: imageUrl });
+      }
+  
+      res.json({ success: true, message: "Provider Profile Updated" });
+    } catch (error) {
+      console.log(error);
+      res.json({ success: false, message: error.message });
+    }
+  };
+
 export {registerProvider,
     providerLogin,
     getProviderProfile,
+    updateProviderProfile
 }

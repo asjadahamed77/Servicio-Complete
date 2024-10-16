@@ -4,6 +4,7 @@ import { AppContext } from '../context/AppContext';
 import { UserContext } from '../context/userContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { BeatLoader } from "react-spinners";
 
 const UserProfile = () => {
     const { userData, setUserData, userToken, getUserProfileData } = useContext(UserContext);
@@ -12,6 +13,7 @@ const UserProfile = () => {
     const [editable, setEditable] = useState(false);
     const [userImage, setUserImage] = useState(null);  // Preview for image file input
     const [imageFile, setImageFile] = useState(null);   // Actual image file to be sent in request
+    const [loading, setLoading] = useState(false);
 
     // Handle image selection
     const handleImage = (e) => {
@@ -24,6 +26,7 @@ const UserProfile = () => {
 
     // Update user profile details
     const updateProfile = async () => {
+        setLoading(true)
         try {
             const formData = new FormData();
             formData.append('userName', userData.userName);
@@ -41,6 +44,7 @@ const UserProfile = () => {
                 toast.success(data.message);
                 await getUserProfileData();  
                 setEditable(false);  
+                setLoading(false)
             } else {
                 toast.error(data.message);
             }
@@ -52,7 +56,9 @@ const UserProfile = () => {
 
     
 
-    return userData && (
+    return loading? <div className="flex justify-center items-center min-h-screen">
+    <BeatLoader color="#212121" size={25} />
+  </div> : userData && (
         <div className='border-t border-mainColor min-h-[90vh] flex flex-col sm:flex-row items-start gap-12'>
             {/* User Profile Section */}
             <div className='mt-[60px] flex flex-col w-full sm:w-[350px]'>
