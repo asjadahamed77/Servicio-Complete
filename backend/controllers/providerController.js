@@ -45,7 +45,7 @@ const registerProvider = async(req,res)=>{
     }
 
     // Create and save new provider
-    const newProvider = new userModel(providerData);
+    const newProvider = new providerModel(providerData);
     const provider = await newProvider.save();
 
     // Generate JWT token

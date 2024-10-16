@@ -5,12 +5,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import AppContextProvider from './context/AppContext';
 import ProviderContextProvider from './context/ProviderContext';
+import UserContextProvider from './context/userContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <AppContextProvider>
     <ProviderContextProvider>
+      <UserContextProvider>
     <App />
+    </UserContextProvider>
     </ProviderContextProvider>
     </AppContextProvider>
 );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import logo from '../assets/Servicio_logo.png';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { IoSearch } from "react-icons/io5";
@@ -6,11 +6,16 @@ import { AiFillMessage } from "react-icons/ai";
 import { FaUser } from "react-icons/fa6";
 import menu from '../assets/menu.png';
 import close from '../assets/close.png';
+import { ProviderContext } from '../context/ProviderContext';
+import { UserContext } from '../context/userContext';
 
 const Navbar = () => {
-    const [token, setToken] = useState(true);
+    const {providerToken,setProviderToken} = useContext(ProviderContext)
+    const {userToken,setUserToken} = useContext(UserContext)
     const [showMenu, setShowMenu] = useState(false);
     const navigate = useNavigate()
+
+    
 
     return (
         <div className='px-4 sm:px-[10%] flex items-center justify-between bg-white sticky top-0 left-0 right-0 py-2 sm:py-0'>
@@ -53,7 +58,7 @@ const Navbar = () => {
                 </div>
                 {/* Profile or Sign Up */}
                 {
-                    token ? <div className='rounded-full text-[20px] cursor-pointer text-mainColor group relative '>
+                    userToken || providerToken ? <div className='rounded-full text-[20px] cursor-pointer text-mainColor group relative '>
                         <FaUser />
                         <div className='hidden group-hover:block absolute top-full right-0 w-[150px] pt-6 bg-white z-20'>
                             <div className='px-4 text-base flex flex-col gap-2 text-gray-700 py-4 shadow-slate-100'>
@@ -61,7 +66,7 @@ const Navbar = () => {
                                <hr />
                                 <Link onClick={()=>window.scrollTo(0,0)} to={'/add-service'} className='hover:text-mainColor font-medium hover:translate-x-[5px] duration-300 transition-all'>Add Service</Link>
                                 <hr />
-                                <p className='hover:text-mainColor font-medium hover:translate-x-[5px] duration-300 transition-all' onClick={()=>{setToken(false); window.scrollTo(0,0)}}>Logout</p>
+                                <p className='hover:text-mainColor font-medium hover:translate-x-[5px] duration-300 transition-all' onClick={()=>{ window.scrollTo(0,0)}}>Logout</p>
                             </div>
                         </div>
                     </div>

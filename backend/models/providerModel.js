@@ -7,7 +7,7 @@ const providerSchema = new mongoose.Schema({
     providerBio: {type:String },
     providerPhone: {type:String, required:true},
     category : {type:String, required:true},
-})
+},{minimize:false})
 
 const providerModel = mongoose.models.provider || mongoose.model('provider',providerSchema)
 
