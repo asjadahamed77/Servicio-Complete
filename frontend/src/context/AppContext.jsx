@@ -5,11 +5,13 @@ export const AppContext = createContext();
 
 const AppContextProvider = (props) => {
   const [search, setSearch] = useState("");
+  const backendUrl = process.env.REACT_APP_BACKEND_URL
     
   const value = {
     posts,
     search,
     setSearch,
+    backendUrl,
   };
 
   return (
