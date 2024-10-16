@@ -20,6 +20,7 @@ const Navbar = () => {
     providerToken && localStorage.removeItem("providerToken");
     userToken && setUserToken(false);
     userToken && localStorage.removeItem("userToken");
+    navigate('/login')
   };
 
   return (
@@ -122,9 +123,7 @@ const Navbar = () => {
                 <p
                   className="hover:text-mainColor font-medium hover:translate-x-[5px] duration-300 transition-all"
                   onClick={() => {
-                    {
-                      logout();
-                    }
+                    logout() ;
                     window.scrollTo(0, 0);
                   }}
                 >

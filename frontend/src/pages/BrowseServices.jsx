@@ -72,15 +72,15 @@ const BrowseServices = () => {
             filteredCategory.reverse().map((item,index)=>(
             <div onClick={()=>{window.scrollTo(0,0); navigate(`/${item._id}`)}} key={index} className='bg-white cursor-pointer border sm:p-4 p-8 overflow-hidden flex flex-col'>
             <div className='flex gap-2 items-center'>
-            <img className='w-16 h-16 sm:w-20 sm:h-20 rounded-full' src={item.provider_image} alt="" />
+            <img className='w-16 h-16 sm:w-20 sm:h-20 rounded-full' src={item.providerImage} alt="" />
             <div className='flex flex-col items-start'>
-              <p className='font-medium sm:text-xl text-lg '>{item.provider_name}</p>
+              <p className='font-medium sm:text-xl text-lg '>{item.providerName}</p>
               <p className='px-2 py-0.5 bg-blue-50 border text-center rounded-full text-xs sm:text-sm w-auto'>{item.category}</p>
             </div>
             </div>
             <div className='mt-4 sm:mt-2'>
-              <p className='font-medium text-sm sm:text-lg'>Phone: <span className='font-mono'>{item.provider_phone}</span></p>
-              <p className='font-medium text-sm sm:text-lg'>Bio: <span className=' font-normal text-sm text-gray-600'>{item.provider_bio}</span></p>
+              <p className='font-medium text-sm sm:text-lg'>Phone: <span className='font-mono'>{item.providerPhone}</span></p>
+              <p className='font-medium overflow-scroll h-24 text-sm sm:text-lg'>Bio: <span className=' font-normal text-sm text-gray-600 '>{item.providerBio}</span></p>
             </div>
             <button className='mt-4 sm:mt-2 w-full bg-mainColor text-white text-sm py-2 hover:bg-secondaryColor'>View Provider</button>
             </div>

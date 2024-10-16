@@ -48,23 +48,28 @@ const ProviderProfile = () => {
       <div className='mt-[60px] flex flex-col w-full sm:w-[350px]'>
         <div className='bg-white border p-8'>
           <div className='flex gap-4 items-center'>
-            <img className='w-20 h-20 rounded-full' src={providerData.provider_image} alt="" />
+            <img className='w-20 h-20 rounded-full' src={providerData.providerImage} alt="" />
             <div className='flex flex-col items-start'>
-              <p className='font-semibold text-lg'>{providerData.provider_name}</p>
+              <p className='font-semibold text-lg'>{providerData.providerName}</p>
               <p className='text-sm font-light py-0.5 px-2 border rounded-full'>{providerData.category}</p>
             </div>
           </div>
           <div className='mt-4'>
             <p className='font-medium'>Email</p>
-            <p className='text-sm text-secondaryColor'>{providerData.provider_email}</p>
+            <p className='text-sm text-secondaryColor'>{providerData.providerEmail}</p>
           </div>
           <div className='mt-2'>
             <p className='font-medium'>Phone</p>
-            <p className='text-sm text-secondaryColor'>{providerData.provider_phone}</p>
+            <p className='text-sm text-secondaryColor'>{providerData.providerPhone}</p>
           </div>
           <div className='mt-2'>
             <p className='font-medium'>Bio</p>
-            <p className='text-sm text-secondaryColor'>{providerData.provider_bio}</p>
+            <p className='text-sm text-secondaryColor'>{providerData.providerBio}</p>
+          </div>
+          <div className='mt-2'>
+            <p className='font-medium'>Address</p>
+            <p className='text-sm text-secondaryColor'>{providerData.providerAddress.line1}</p>
+            <p className='text-sm text-secondaryColor'>{providerData.providerAddress.line2}</p>
           </div>
           <div className='flex mt-2'>
             <button  onClick={handleAddProvider} className='w-full text-center rounded bg-gray-700 text-white text-sm py-2 hover:opacity-85'>

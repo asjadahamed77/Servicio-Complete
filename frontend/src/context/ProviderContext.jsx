@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import review2 from "../assets/Reviews/review (2).jpg";
-import { providers } from "../assets/assets";
+
 import axios from "axios";
 import { AppContext } from "./AppContext";
 import { toast } from "react-toastify";
@@ -15,7 +14,7 @@ const ProviderContextProvider = (props) => {
       : false
   );
   const [providerData, setProviderData] = useState(false)
-
+const [providers,setProviders] = useState([])
   const getProviderProfileData = async()=>{
     try {
       const {data} = await axios.get(`${backendUrl}/api/provider/get-profile`, { headers: { providerToken } });
@@ -31,6 +30,28 @@ const ProviderContextProvider = (props) => {
       console.log(error)
     }
   }
+
+
+  // List all providers
+  const listProviders = async ()=>{
+    try {
+      const {data} = await axios.get(backendUrl+'/api/provider/list')
+      if(data.success){
+        setProviders(data.providers)
+      }else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error(error.message)
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
+    listProviders()
+  },[])
+
+
   useEffect(()=>{
     if(providerToken){
       getProviderProfileData()
@@ -59,6 +80,7 @@ const ProviderContextProvider = (props) => {
     providerData,
     setProviderData,
     providers,
+    setProviders,
     addProviderToMyList,
     myProviders,
     setMyProviders,

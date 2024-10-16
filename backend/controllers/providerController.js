@@ -130,8 +130,20 @@ const updateProviderProfile = async (req, res) => {
     }
   };
 
+  // List all providers
+  const listProviders = async(req,res)=>{
+    try {
+      const providers = await providerModel.find({}).select('-password')
+      res.json({success:true,providers})
+    } catch (error) {
+      console.log(error);
+      res.json({ success: false, message: error.message });
+    }
+  }
+
 export {registerProvider,
     providerLogin,
     getProviderProfile,
-    updateProviderProfile
+    updateProviderProfile,
+    listProviders
 }
