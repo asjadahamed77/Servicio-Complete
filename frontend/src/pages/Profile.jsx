@@ -2,10 +2,12 @@ import React, { useContext, useState } from 'react'
 import { ProviderContext } from '../context/ProviderContext'
 import { PiUploadSimpleBold } from "react-icons/pi";
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../context/AppContext';
 
 
 const Profile = () => {
-    const {providerData} = useContext(ProviderContext)
+    const {providerData,setProviderData,providerToken,getProviderProfileData} = useContext(ProviderContext)
+    const {backendUrl} = useContext(AppContext)
     const navigate = useNavigate()
     const [editable,setEditable] = useState(false)
     const [image, setImage] = useState(null)
@@ -21,35 +23,35 @@ const Profile = () => {
     e.preventDefault()
   }
 
-  return (
+  return providerData && (
     <div className='border-t border-mainColor min-h-[90vh] flex flex-col sm:flex-row items-start gap-12'>
-        {/* ----- User Profile ------- */}
+        {/* ----- Provider Profile ------- */}
         <div className='mt-[60px] flex flex-col w-full  sm:w-[350px]'>
           <form onSubmit={onSubmitHandler} className='bg-white border p-8'>
             <div className='flex gap-4 items-center'>
                 {
                     editable?
                     <label htmlFor='image'>
-                        <img className='w-20 h-20 rounded-full' src={image ||providerData[0].provider_image} alt="" />
+                        <img className='w-20 h-20 rounded-full' src={image || providerData.providerImage} alt="" />
                         <input type="file" className='hidden' onChange={handleImage} id='image' />
                     </label>
                     :
-                    <img className='w-20 h-20 rounded-full' src={image || providerData[0].provider_image} alt="" />
+                    <img className='w-20 h-20 rounded-full' src={image || providerData.providerImage} alt="" />
                 }
-            <div>
+            <div className='flex flex-col items-start'>
             {
                 editable ?
                 <input type="text" placeholder='Change here' className='w-full p-1 border rounded-md mb-1' />
                 :
-                <p className='font-semibold text-lg'>{providerData[0].provider_name}</p>
+                <p className='font-semibold text-lg'>{providerData.providerName}</p>
             }
-            <p className='text-sm font-light py-0.5 px-2 border rounded-full'>{providerData[0].category}</p>
+            <p className='text-sm font-light py-0.5 px-2 border rounded-full'>{providerData.category}</p>
             </div>
                 
             </div>
             <div className='mt-4'>
                 <p className='font-medium'>Email</p>
-                <p className='text-sm text-secondaryColor'>{providerData[0].provider_email}</p>
+                <p className='text-sm text-secondaryColor'>{providerData.providerEmail}</p>
             </div>
             <div className='mt-2'>
                 <p className='font-medium'>Phone</p>
@@ -57,7 +59,7 @@ const Profile = () => {
                     editable ?
                     <input type="number" placeholder='Change your phone' className='w-full rounded-md border text-sm p-1' />
                     :
-                    <p className='text-sm text-secondaryColor'>{providerData[0].provider_phone}</p>
+                    <p className='text-sm text-secondaryColor'>{providerData.providerPhone}</p>
                 }
             </div>
         
@@ -67,7 +69,7 @@ const Profile = () => {
                     editable?
                     <textarea className='resize-none w-full border rounded-md overflow-y-scroll h-20 p-1 text-sm' placeholder='Type here... '></textarea>
                     :
-                    <p className='text-sm text-secondaryColor'>{providerData[0].provider_bio}</p>
+                    <p className='text-sm text-secondaryColor'>{providerData.providerBio}</p>
                 }
             </div>
             <div className='flex mt-2'>

@@ -88,6 +88,20 @@ const providerLogin = async (req,res) => {
     }
 }
 
+// get provider profile
+
+const getProviderProfile = async(req,res)=>{
+    try {
+        const {providerId} = req.body
+        const providerData = await providerModel.findById(providerId).select("-providerPassword")
+        res.json({ success: true, providerData });
+    } catch (error) {
+        console.log(error)
+        res.json({success:false, message:error.message})
+    }
+}
+
 export {registerProvider,
-    providerLogin
+    providerLogin,
+    getProviderProfile,
 }

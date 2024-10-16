@@ -49,7 +49,10 @@ const Login = () => {
         }
       }
       setLoading(false);
-    } catch (error) {}
+    } catch (error) {
+      toast.error(error.message)
+      console.log(error)
+    }
   };
   useEffect(() => {
     if (providerToken) {

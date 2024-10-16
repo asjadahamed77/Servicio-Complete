@@ -1,26 +1,46 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import review2 from "../assets/Reviews/review (2).jpg";
 import { providers } from "../assets/assets";
+import axios from "axios";
+import { AppContext } from "./AppContext";
+import { toast } from "react-toastify";
 export const ProviderContext = createContext();
 
 const ProviderContextProvider = (props) => {
+  const {backendUrl} = useContext(AppContext)
+  
   const [providerToken, setProviderToken] = useState(
     localStorage.getItem("providerToken")
       ? localStorage.getItem("providerToken")
       : false
   );
-  const [providerData, setProviderData] = useState([
-    {
-      provider_name: "Asjad Ahamed",
-      provider_image: review2,
-      provider_bio:
-        "I am Asjad Ahamed. I have 04 years experience in Full Stack Developer. I expert in ReactJs, NextJs, NodeJs, ExpressJs and Firebase.",
-      category: "Web Developers",
-      provider_email: "asjad2001@icloud.com",
-      provider_phone: "761257751",
-      available: true,
-    },
-  ]);
+  const [providerData, setProviderData] = useState(false)
+
+  const getProviderProfileData = async()=>{
+    try {
+      const {data} = await axios.get(`${backendUrl}/api/provider/get-profile`, { headers: { providerToken } });
+
+      if(data.success){
+        setProviderData(data.providerData)
+      }
+      else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error(error.message)
+      console.log(error)
+    }
+  }
+  useEffect(()=>{
+    if(providerToken){
+      getProviderProfileData()
+    }
+    else{
+      setProviderData(false)
+    }
+  },[providerToken])
+
+    
 
   const [myProviders, setMyProviders] = useState([]);
   const addProviderToMyList = (provider) => {
@@ -44,7 +64,8 @@ const ProviderContextProvider = (props) => {
     setMyProviders,
     removeProviderFromMyList,
     providerToken,
-    setProviderToken
+    setProviderToken,
+    getProviderProfileData,
   };
 
   return (
