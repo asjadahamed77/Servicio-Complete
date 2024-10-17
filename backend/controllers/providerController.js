@@ -177,11 +177,24 @@ const updateProviderProfile = async (req, res) => {
     }
   }
 
+  // List all services
+
+  const listServices = async(req,res)=>{
+    try {
+      const posts = await postModel.find({})
+      res.json({success:true, posts})
+    } catch (error) {
+      console.log(error);
+      res.json({ success: false, message: error.message });
+    }
+  }
+
 
 export {registerProvider,
     providerLogin,
     getProviderProfile,
     updateProviderProfile,
     listProviders,
-    addService
+    addService,
+    listServices
 }

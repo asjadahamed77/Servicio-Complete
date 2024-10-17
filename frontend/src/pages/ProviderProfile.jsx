@@ -7,14 +7,13 @@ import { toast } from 'react-toastify';
 
 const ProviderProfile = () => {
   const { providerId } = useParams();
-  const [providerData, setProviderData] = useState(null);
-  const { providers, addProviderToMyList } = useContext(ProviderContext);
+  const { providers,providerData,setProviderData, addProviderToMyList } = useContext(ProviderContext);
   const { posts } = useContext(AppContext);
 
   const [providerPosts, setProviderPosts] = useState([]);
 
   const fetchProviderPosts = () => {
-    const foundPosts = posts.filter((item) => item._id === providerId);
+    const foundPosts = posts.filter((item) => item.providerData._id === providerId);
     setProviderPosts(foundPosts);
   };
 
@@ -82,31 +81,31 @@ const ProviderProfile = () => {
       {/* ---- Provider Works ------- */}
       <div className='lg:mt-[60px] bg-white p-4 flex-1 border overflow-y-scroll md:h-[80vh] w-full grid lg:grid-cols-2 mb-12 gap-4' >
         {providerPosts.map((item, index) => (
-          <div key={index} className="p-4 border">
+          <div key={index} className="p-4 border min-h-[400px]">
             <div className="flex gap-2 items-center cursor-pointer">
-              <img className="w-16 h-16 rounded-full" src={item.provider_image} alt="user" />
+              <img className="w-16 h-16 rounded-full" src={item.providerData.providerImage} alt="user" />
               <div>
-                <p className="font-semibold">{item.provider_name}</p>
-                <p className="text-sm text-secondaryColor">{item.category}</p>
+                <p className="font-semibold">{item.providerData.providerName}</p>
+                <p className="text-sm text-secondaryColor">{item.providerData.category}</p>
               </div>
             </div>
             <div>
-              <p className="text-gray-600 italic mt-1">{item.post_description}</p>
+              <p className="text-gray-600 italic mt-1">{item.postDescription}</p>
               <div className='flex items-center justify-center'>
                 <div>
                   <FaAngleLeft className='bg-slate-100 text-2xl cursor-pointer hover:text-white hover:bg-mainColor transition-all duration-150 p-1 rounded-full border mr-1' />
                 </div>
-                {item.images && <img className="mt-2 w-[90%]" src={item.images[0]} alt="" />}
+                {item.postImages && <img className="mt-2 w-[90%]" src={item.postImages[0]} alt="" />}
                 <div>
                   <FaAngleRight className='bg-slate-100 text-2xl cursor-pointer hover:text-white hover:bg-mainColor transition-all duration-150 p-1 rounded-full border ml-1' />
                 </div>
               </div>
             </div>
             <div className="flex gap-2 mt-2 text-gray-600 text-sm">
-              <p>{item.date}</p>
-              |
-              <p>{item.time}</p>
-            </div>
+                                <p>{new Date(item.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+                                |
+                                <p>{new Date(item.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
+                            </div>
           </div>
         ))}
       </div>

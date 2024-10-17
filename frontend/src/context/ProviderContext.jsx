@@ -6,62 +6,59 @@ import { toast } from "react-toastify";
 export const ProviderContext = createContext();
 
 const ProviderContextProvider = (props) => {
-  const {backendUrl} = useContext(AppContext)
-  
+  const { backendUrl } = useContext(AppContext);
+
   const [providerToken, setProviderToken] = useState(
     localStorage.getItem("providerToken")
       ? localStorage.getItem("providerToken")
       : false
   );
-  const [providerData, setProviderData] = useState(false)
-const [providers,setProviders] = useState([])
-  const getProviderProfileData = async()=>{
+  const [providerData, setProviderData] = useState(false);
+  const [providers, setProviders] = useState([]);
+  const getProviderProfileData = async () => {
     try {
-      const {data} = await axios.get(`${backendUrl}/api/provider/get-profile`, { headers: { providerToken } });
+      const { data } = await axios.get(
+        `${backendUrl}/api/provider/get-profile`,
+        { headers: { providerToken } }
+      );
 
-      if(data.success){
-        setProviderData(data.providerData)
-      }
-      else{
-        toast.error(data.message)
+      if (data.success) {
+        setProviderData(data.providerData);
+      } else {
+        toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error.message)
-      console.log(error)
+      toast.error(error.message);
+      console.log(error);
     }
-  }
-
+  };
 
   // List all providers
-  const listProviders = async ()=>{
+  const listProviders = async () => {
     try {
-      const {data} = await axios.get(backendUrl+'/api/provider/list')
-      if(data.success){
-        setProviders(data.providers)
-      }else{
-        toast.error(data.message)
+      const { data } = await axios.get(backendUrl + "/api/provider/list");
+      if (data.success) {
+        setProviders(data.providers);
+      } else {
+        toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error.message)
-      console.log(error)
+      toast.error(error.message);
+      console.log(error);
     }
-  }
+  };
 
-  useEffect(()=>{
-    listProviders()
-  },[])
+  useEffect(() => {
+    listProviders();
+  }, []);
 
-
-  useEffect(()=>{
-    if(providerToken){
-      getProviderProfileData()
+  useEffect(() => {
+    if (providerToken) {
+      getProviderProfileData();
+    } else {
+      setProviderData(false);
     }
-    else{
-      setProviderData(false)
-    }
-  },[providerToken])
-
-    
+  }, [providerToken]);
 
   const [myProviders, setMyProviders] = useState([]);
   const addProviderToMyList = (provider) => {
@@ -88,6 +85,7 @@ const [providers,setProviders] = useState([])
     providerToken,
     setProviderToken,
     getProviderProfileData,
+    listProviders,
   };
 
   return (

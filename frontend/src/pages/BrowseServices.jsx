@@ -32,7 +32,10 @@ const BrowseServices = () => {
 
   useEffect(()=>{
     applyFilteredCategory()
+
   },[providers,category])
+
+
 
   return loading?
   <div className="flex justify-center items-center min-h-screen">

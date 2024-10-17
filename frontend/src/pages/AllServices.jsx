@@ -9,14 +9,14 @@ import { useNavigate } from 'react-router-dom';
 const AllServices = () => {
     const navigate = useNavigate()
     const [loading,setLoading] = useState(false)
-  const { posts = [], search , setSearch } = useContext(AppContext);  
+  const { posts , search , setSearch } = useContext(AppContext);  
   const [filterPosts, setFilterPosts] = useState([]); 
   const applyFilter = () => {
     setLoading(true);
     let postsCopy = posts.slice();
     if (search) {
       postsCopy = postsCopy.filter(item => 
-        (item.provider_name && item.provider_name.toLowerCase().includes(search.toLowerCase())) ||
+        (item.providerName && item.providerName.toLowerCase().includes(search.toLowerCase())) ||
         (item.category && item.category.toLowerCase().includes(search.toLowerCase()))
       );
     }
@@ -50,29 +50,29 @@ const AllServices = () => {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 pb-8">
         {filterPosts.reverse().map((item, index) => (
           <div key={index} className="p-4 border">
-            <div onClick={()=>{window.scrollTo(0,0); navigate(`/${item._id}`)}} className="flex gap-2 items-center cursor-pointer">
-              <img className="w-16 h-16 rounded-full" src={item.provider_image} alt="user" />
+            <div onClick={()=>{window.scrollTo(0,0); navigate(`/${item.providerData._id}`)}} className="flex gap-2 items-center cursor-pointer">
+              <img className="w-16 h-16 rounded-full" src={item.providerData.providerImage} alt="user" />
               <div>
-                <p className="font-semibold">{item.provider_name}</p>
-                <p className="text-sm text-secondaryColor">{item.category}</p>
+                <p className="font-semibold">{item.providerData.providerName}</p>
+                <p className="text-sm text-secondaryColor">{item.providerData.category}</p>
               </div>
             </div>
             <div>
-              <p className="text-gray-600 italic mt-1">{item.post_description}</p>
+              <p className="text-gray-600 italic mt-1">{item.postDescription}</p>
              <div className='flex items-center justify-center'>
                 <div>
                 <FaAngleLeft className='bg-slate-100 text-2xl cursor-pointer hover:text-white hover:bg-mainColor transition-all duration-150 p-1 rounded-full border mr-1' />
                 </div>
-             {item.images  && <img className="mt-2 w-[90%] " src={item.images[0]} alt="" />} 
+             {item.postImages  && <img className="mt-2 w-[90%] " src={item.postImages[0]} alt="" />} 
              <div>
              <FaAngleRight className='bg-slate-100 text-2xl cursor-pointer hover:text-white hover:bg-mainColor transition-all duration-150 p-1 rounded-full border ml-1'  />
              </div>
              </div>
             </div>
             <div className="flex gap-2 mt-2 text-gray-600 text-sm">
-              <p>{item.date}</p>
-              |
-              <p>{item.time}</p>
+            <p>{new Date(item.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+                                |
+                                <p>{new Date(item.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
             </div>
           </div>
         ))}
