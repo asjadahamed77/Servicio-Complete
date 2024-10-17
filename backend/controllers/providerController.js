@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import providerModel from "../models/providerModel.js";
 import {v2 as cloudinary} from 'cloudinary'
+import postModel from "../models/postModel.js";
 
 const registerProvider = async(req,res)=>{
     try {
@@ -141,9 +142,46 @@ const updateProviderProfile = async (req, res) => {
     }
   }
 
+  // Add a service
+  const addService = async(req,res)=>{
+    try {
+      const {providerId, postDescription } = req.body
+      const imageFiles = req.files; 
+      
+      const  providerData = await providerModel.findById(providerId).select('-providerPassword')
+
+
+
+    // Upload images to Cloudinary
+    const uploadPromises = imageFiles.map((file) => {
+      return cloudinary.uploader.upload(file.path, {
+        resource_type: 'image',
+        folder: 'services',
+      });
+    });
+    const uploadResults = await Promise.all(uploadPromises);
+
+    // Extract URLs of uploaded images
+    const postImages = uploadResults.map(result => result.secure_url);
+    const postData = {
+      providerId,postDescription,postImages,providerData, date: Date.now()
+    }
+    const newPost = new postModel(postData);
+
+    await newPost.save()
+    res.json({success:true, message:"Service Added"})
+
+    } catch (error) {
+      console.log(error);
+      res.json({ success: false, message: error.message });
+    }
+  }
+
+
 export {registerProvider,
     providerLogin,
     getProviderProfile,
     updateProviderProfile,
-    listProviders
+    listProviders,
+    addService
 }

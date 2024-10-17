@@ -4,11 +4,12 @@ const authProvider = async (req, res, next) => {
   try {
     const { providertoken } = req.headers;
 
+
     if (!providertoken) {
       res.json({ success: false, message: "Not Authorized Login Again" });
     }
-    const decodedToken = jwt.verify(providertoken, process.env.JWT_SECRET);
-   req.body.providerId = decodedToken.id
+    const decodedtoken = jwt.verify(providertoken, process.env.JWT_SECRET);
+   req.body.providerId = decodedtoken.id
     next();
   } catch (error) {
     console.log(error);
