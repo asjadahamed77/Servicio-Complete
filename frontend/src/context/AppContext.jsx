@@ -9,6 +9,7 @@ const AppContextProvider = (props) => {
   const [search, setSearch] = useState("");
   const backendUrl = process.env.REACT_APP_BACKEND_URL
   const [posts,setPosts] = useState([])
+  const [reviews,setReviews] = useState([])
 
   const getAllPosts = async()=>{
     try {
@@ -24,9 +25,24 @@ const AppContextProvider = (props) => {
     }
   }
 
+  const getAllReviews = async()=>{
+    try {
+      const {data} = await axios.get(backendUrl+'/api/user/list-reviews')
+      if(data.success){
+        setReviews(data.reviews)
+      }
+    } catch (error) {
+      toast.error(error.message)
+      console.log(error)
+    }
+  }
+
   useEffect(()=>{
     getAllPosts()
   },[posts])
+  useEffect(()=>{
+    getAllReviews()
+  },[reviews])
 
     
   const value = {
@@ -34,6 +50,7 @@ const AppContextProvider = (props) => {
     search,
     setSearch,
     backendUrl,
+    reviews,setReviews,getAllReviews
   };
 
   return (
