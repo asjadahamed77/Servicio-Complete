@@ -16,8 +16,8 @@ const AllServices = () => {
     let postsCopy = posts.slice();
     if (search) {
       postsCopy = postsCopy.filter(item => 
-        (item.providerName && item.providerName.toLowerCase().includes(search.toLowerCase())) ||
-        (item.category && item.category.toLowerCase().includes(search.toLowerCase()))
+        (item.providerData.providerName && item.providerData.providerName.toLowerCase().includes(search.toLowerCase())) ||
+        (item.providerData.category && item.providerData.category.toLowerCase().includes(search.toLowerCase()))
       );
     }
     setFilterPosts(postsCopy);

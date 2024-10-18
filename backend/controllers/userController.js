@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import userModel from "../models/userModel.js";
 import { v2 as cloudinary } from "cloudinary";
+import providerModel from "../models/providerModel.js";
+
 
 const registerUser = async (req, res) => {
   try {
@@ -125,4 +127,24 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
-export { registerUser, userLogin, getUserProfile, updateUserProfile };
+// Add to my providers
+const addToMyProvider = async(req,res)=>{
+  try {
+    const {userId,providerId} = req.body
+    const providerData = await providerModel.findById(providerId).select('-providerPassword')
+    if(!providerData){
+      return res.json({success:false, message:"Provider not available"})
+    }
+
+    
+
+    await userModel.findByIdAndUpdate(userId)
+    
+
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+}
+
+export { registerUser, userLogin, getUserProfile, updateUserProfile, addToMyProvider };

@@ -3,12 +3,14 @@ import { useParams } from 'react-router-dom';
 import { ProviderContext } from '../context/ProviderContext';
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import { AppContext } from '../context/AppContext';
-import { toast } from 'react-toastify';
+import { UserContext } from '../context/userContext';
+
 
 const ProviderProfile = () => {
   const { providerId } = useParams();
-  const { providers,providerData,setProviderData, addProviderToMyList } = useContext(ProviderContext);
+  const { providers, providerData, setProviderData } = useContext(ProviderContext);
   const { posts } = useContext(AppContext);
+  const { addProviderToMyList } = useContext(UserContext);
 
   const [providerPosts, setProviderPosts] = useState([]);
 
@@ -22,24 +24,18 @@ const ProviderProfile = () => {
     setProviderData(foundProvider || null);
   };
 
-  const handleAddProvider = () => {
-    if (providerData) {
-      addProviderToMyList(providerData); 
-      toast.success("Provider Added")
-    }
-  };
-
   useEffect(() => {
     fetchProviderData();
     fetchProviderPosts();
   }, [providerId, providers, posts]);
 
-  // Handle loading or empty data state
   if (!providerData) {
     return <p>Loading...</p>; 
   }
 
-
+  const handleAddProvider = () => {
+    addProviderToMyList(providerId);  // Pass the providerId when calling addProviderToMyList
+  };
 
   return (
     <div className='border-t border-mainColor min-h-[90vh] flex flex-col lg:flex-row items-start gap-12'>
@@ -71,7 +67,7 @@ const ProviderProfile = () => {
             <p className='text-sm text-secondaryColor'>{providerData.providerAddress.line2}</p>
           </div>
           <div className='flex mt-2'>
-            <button  onClick={handleAddProvider} className='w-full text-center rounded bg-gray-700 text-white text-sm py-2 hover:opacity-85'>
+            <button onClick={handleAddProvider} className='w-full text-center rounded bg-gray-700 text-white text-sm py-2 hover:opacity-85'>
               Add to My Providers
             </button>
           </div>
@@ -79,7 +75,7 @@ const ProviderProfile = () => {
       </div>
 
       {/* ---- Provider Works ------- */}
-      <div className='lg:mt-[60px] bg-white p-4 flex-1 border overflow-y-scroll md:h-[80vh] w-full grid lg:grid-cols-2 mb-12 gap-4' >
+      <div className='lg:mt-[60px] bg-white p-4 flex-1 border overflow-y-scroll md:h-[80vh] w-full grid lg:grid-cols-2 mb-12 gap-4'>
         {providerPosts.map((item, index) => (
           <div key={index} className="p-4 border min-h-[400px]">
             <div className="flex gap-2 items-center cursor-pointer">
@@ -102,10 +98,10 @@ const ProviderProfile = () => {
               </div>
             </div>
             <div className="flex gap-2 mt-2 text-gray-600 text-sm">
-                                <p>{new Date(item.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
-                                |
-                                <p>{new Date(item.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
-                            </div>
+              <p>{new Date(item.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+              |
+              <p>{new Date(item.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
+            </div>
           </div>
         ))}
       </div>

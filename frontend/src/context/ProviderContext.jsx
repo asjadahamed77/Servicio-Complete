@@ -60,28 +60,15 @@ const ProviderContextProvider = (props) => {
     }
   }, [providerToken]);
 
-  const [myProviders, setMyProviders] = useState([]);
-  const addProviderToMyList = (provider) => {
-    if (!myProviders.find((item) => item._id === provider._id)) {
-      setMyProviders([...myProviders, provider]);
-    }
-  };
-  const removeProviderFromMyList = (providerId) => {
-    const updatedProviders = myProviders.filter(
-      (item) => item._id !== providerId
-    );
-    setMyProviders(updatedProviders);
-  };
+  
+  
 
   const value = {
     providerData,
     setProviderData,
     providers,
     setProviders,
-    addProviderToMyList,
-    myProviders,
-    setMyProviders,
-    removeProviderFromMyList,
+  
     providerToken,
     setProviderToken,
     getProviderProfileData,

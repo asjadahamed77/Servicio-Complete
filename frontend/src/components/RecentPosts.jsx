@@ -48,7 +48,7 @@ const RecentPosts = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex gap-2 mt-2 text-gray-600 text-sm">
+                            <div className="flex  gap-2 mt-2 text-gray-600 text-sm">
                                 <p>{new Date(item.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
                                 |
                                 <p>{new Date(item.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
