@@ -4,6 +4,7 @@ import authUser from "../middlewares/authUser.js";
 import upload from "../middlewares/multer.js";
 import { addReview, listReviews } from "../controllers/reviewController.js";
 
+
 const userRouter = express.Router()
 
 userRouter.post('/register',registerUser)
@@ -13,5 +14,6 @@ userRouter.post('/update-profile',upload.single('userImage'),authUser,updateUser
 userRouter.post('/add-provider',authUser,addToMyProvider)
 userRouter.post('/add-review',upload.single('reviewerImage'),authUser,addReview)
 userRouter.get('/list-reviews',listReviews)
+
 
 export default userRouter

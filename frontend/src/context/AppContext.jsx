@@ -10,6 +10,7 @@ const AppContextProvider = (props) => {
   const backendUrl = process.env.REACT_APP_BACKEND_URL
   const [posts,setPosts] = useState([])
   const [reviews,setReviews] = useState([])
+ 
 
   const getAllPosts = async()=>{
     try {

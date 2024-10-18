@@ -1,13 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ProviderContext } from "../context/ProviderContext";
 import { PiUploadSimpleBold } from "react-icons/pi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { BeatLoader } from "react-spinners";
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 
 const Profile = () => {
+  
   const {
     providerData,
     setProviderData,
@@ -20,6 +22,28 @@ const Profile = () => {
   const [providerImage, setProviderImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [providerPosts, setProviderPosts] = useState([]);
+
+  const fetchProvidersPosts = async()=>{
+    try {
+      const {data} = await axios.get(backendUrl+'/api/provider/list-provider-posts',{headers:{providerToken}})
+    if(data.success){
+      setProviderPosts(data.providerPost)
+    }
+    else{
+      toast.error(data.message)
+    }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message)
+    }
+  }
+
+  useEffect(()=>{
+    fetchProvidersPosts()
+  },[providerPosts,providerToken])
+
+  
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -65,6 +89,8 @@ const Profile = () => {
       console.log(error);
     }
   };
+
+  
 
   return loading ? (
     <div className="flex justify-center items-center min-h-screen">
@@ -248,7 +274,39 @@ const Profile = () => {
           </div>
         </div>
         {/* ---- User Works ------- */}
-        <div className="mt-[60px] bg-white p-4 flex-1 border overflow-y-scroll min-h-[80vh] w-full"></div>
+        <div className="mt-[60px] bg-white mb-12 p-4 flex-1 border overflow-y-scroll min-h-[80vh] w-full">
+        <p className="font-medium ">My Profile</p>
+        <div className='mt-4 bg-white p-4 flex-1 border overflow-y-scroll md:h-[80vh] w-full grid lg:grid-cols-2 mb-12 gap-4'>
+        {providerPosts.map((item, index) => (
+          <div key={index} className="p-4 border min-h-[400px]">
+            <div className="flex gap-2 items-center cursor-pointer">
+              <img className="w-16 h-16 rounded-full" src={item.providerData.providerImage} alt="user" />
+              <div>
+                <p className="font-semibold">{item.providerData.providerName}</p>
+                <p className="text-sm text-secondaryColor">{item.providerData.category}</p>
+              </div>
+            </div>
+            <div>
+              <p className="text-gray-600 italic mt-1">{item.postDescription}</p>
+              <div className='flex items-center justify-center'>
+                <div>
+                  <FaAngleLeft className='bg-slate-100 text-2xl cursor-pointer hover:text-white hover:bg-mainColor transition-all duration-150 p-1 rounded-full border mr-1' />
+                </div>
+                {item.postImages && <img className="mt-2 w-[90%]" src={item.postImages[0]} alt="" />}
+                <div>
+                  <FaAngleRight className='bg-slate-100 text-2xl cursor-pointer hover:text-white hover:bg-mainColor transition-all duration-150 p-1 rounded-full border ml-1' />
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-2 mt-2 text-gray-600 text-sm">
+              <p>{new Date(item.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+              |
+              <p>{new Date(item.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+        </div>
       </div>
     )
   );

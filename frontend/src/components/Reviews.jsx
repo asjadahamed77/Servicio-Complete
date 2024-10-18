@@ -1,8 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { FaArrowRight } from "react-icons/fa6";
 import { AppContext } from '../context/AppContext';
+import {useNavigate} from 'react-router-dom'
 const Reviews = () => {
   const {reviews} = useContext(AppContext)
+  const navigate = useNavigate()
   return (
     <div className='flex flex-col mt-8'>
       {/* ------ Headings ------- */}
@@ -36,7 +38,7 @@ const Reviews = () => {
         }
       </div>
       <div className="flex justify-center mt-4">
-      <button className="px-10 py-2 border rounded-full max-w-[250px] text-sm flex items-center gap-1 hover:gap-3 duration-300 transition-all">More Reviews
+      <button  onClick={()=>{navigate('/reviews'); window.scrollTo(0,0)}} className="px-10 py-2 border rounded-full max-w-[250px] text-sm flex items-center gap-1 hover:gap-3 duration-300 transition-all">More Reviews
         <div className="text-mainColor text-sm">
             <FaArrowRight />
         </div>

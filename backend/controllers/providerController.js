@@ -142,6 +142,8 @@ const updateProviderProfile = async (req, res) => {
     }
   }
 
+  
+
   // Add a service
   const addService = async(req,res)=>{
     try {
@@ -189,6 +191,18 @@ const updateProviderProfile = async (req, res) => {
     }
   }
 
+  // List Provider posts 
+  const listProviderPosts = async(req,res)=>{
+    try {
+      const {providerId} = req.body
+      const providerPost = await postModel.find({providerId})
+      res.json({success:true, providerPost})
+    } catch (error) {
+      console.log(error);
+      res.json({ success: false, message: error.message });
+    }
+  }
+
 
 export {registerProvider,
     providerLogin,
@@ -196,5 +210,6 @@ export {registerProvider,
     updateProviderProfile,
     listProviders,
     addService,
-    listServices
+    listServices,
+    listProviderPosts
 }

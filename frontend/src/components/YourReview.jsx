@@ -4,8 +4,9 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { AppContext } from '../context/AppContext';
 import { UserContext } from '../context/userContext';
-
+import { BeatLoader } from 'react-spinners';
 const YourReview = () => {
+  const [loading,setLoading] = useState(false)
   const [image, setImage] = useState(null); 
   const [reviewerName, setReviewerName] = useState("");
   const [reviewerCity, setReviewerCity] = useState("");
@@ -27,6 +28,7 @@ const YourReview = () => {
   
 
     try {
+      setLoading(true)
       const formData = new FormData();
       formData.append('reviewerName', reviewerName);
       formData.append('reviewerCity', reviewerCity);
@@ -52,6 +54,7 @@ const YourReview = () => {
         setReviewAbout("");
         setImage(null);
         setImageFile(null);
+        setLoading(false)
       } else {
         toast.error(data.message)
       }
@@ -113,7 +116,11 @@ const YourReview = () => {
         <button 
           type='submit' 
           className='text-sm hover:bg-secondaryColor w-full bg-mainColor text-white py-2 rounded'>
-          Submit Now
+          {loading ? (
+                  <BeatLoader color="#ffffff" size={10} />
+                ) : (
+                  'Submit Now'
+                )}
         </button>
       </form>
     </div>

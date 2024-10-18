@@ -17,6 +17,7 @@ import HelpPage from "./pages/HelpPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import UserProfile from "./pages/userProfile";
+import Reviews from "./pages/Reviews";
 
 function App() {
   useEffect(()=>{
@@ -34,6 +35,7 @@ function App() {
       <Route path="/user-profile" element={<UserProfile />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/reviews" element={<Reviews />} />
       <Route path="/help" element={<HelpPage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />

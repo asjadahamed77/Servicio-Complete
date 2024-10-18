@@ -112,13 +112,13 @@ const Navbar = () => {
                   My Profile
                 </p>
                 <hr />
-                <p
+                <Link
                   onClick={() => window.scrollTo(0, 0)}
                   to={"/add-service"}
                   className="hover:text-mainColor font-medium hover:translate-x-[5px] duration-300 transition-all"
                 >
                   {providerToken? 'Add Service':''}
-                </p>
+                </Link>
                 <hr />
                 <p
                   className="hover:text-mainColor font-medium hover:translate-x-[5px] duration-300 transition-all"

@@ -48,7 +48,7 @@ const AllServices = () => {
       </div>
       {/* ------ Display All Services ------ */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 pb-8">
-        {filterPosts.reverse().map((item, index) => (
+        {filterPosts.map((item, index) => (
           <div key={index} className="p-4 border">
             <div onClick={()=>{window.scrollTo(0,0); navigate(`/${item.providerData._id}`)}} className="flex gap-2 items-center cursor-pointer">
               <img className="w-16 h-16 rounded-full" src={item.providerData.providerImage} alt="user" />

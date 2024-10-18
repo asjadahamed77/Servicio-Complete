@@ -72,7 +72,7 @@ const BrowseServices = () => {
       {/* ----- Display All Providers */}
       <div className='grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-4  mt-8 pb-6'>
         {
-            filteredCategory.reverse().map((item,index)=>(
+            filteredCategory.map((item,index)=>(
             <div onClick={()=>{window.scrollTo(0,0); navigate(`/${item._id}`)}} key={index} className='bg-white cursor-pointer border sm:p-4 p-8 overflow-hidden flex flex-col'>
             <div className='flex gap-2 items-center'>
             <img className='w-16 h-16 sm:w-20 sm:h-20 rounded-full' src={item.providerImage} alt="" />
