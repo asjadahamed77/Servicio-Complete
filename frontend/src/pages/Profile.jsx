@@ -39,6 +39,19 @@ const Profile = () => {
     }
   }
 
+  const deletePost = async(postId)=>{
+    try {
+      const {data} = await axios.post(backendUrl+'/api/provider/delete-post',{postId},{headers:{providerToken}})
+      if(data.success){
+        toast.success("Post Deleted Successfully")
+        fetchProvidersPosts()
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message)
+    }
+  }
+
   useEffect(()=>{
     fetchProvidersPosts()
   },[providerPosts,providerToken])
@@ -303,7 +316,11 @@ const Profile = () => {
               |
               <p>{new Date(item.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
             </div>
+            <div onClick={()=>deletePost(item._id)} className="flex justify-center w-full py-3 border border-red-500 rounded mt-2 cursor-pointer text-red-500 hover:bg-red-400 hover:text-white">
+              Delete Post
+            </div>
           </div>
+          
         ))}
       </div>
         </div>

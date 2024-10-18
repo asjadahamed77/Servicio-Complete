@@ -203,6 +203,18 @@ const updateProviderProfile = async (req, res) => {
     }
   }
 
+  // Delete Provider Post
+  const deletePost = async(req,res)=>{
+    try {
+      const {postId} = req.body
+      await postModel.findByIdAndDelete(postId)
+      res.json({success:true, postId})
+    } catch (error) {
+      console.log(error);
+      res.json({ success: false, message: error.message });
+    }
+  }
+
 
 export {registerProvider,
     providerLogin,
@@ -211,5 +223,6 @@ export {registerProvider,
     listProviders,
     addService,
     listServices,
-    listProviderPosts
+    listProviderPosts,
+    deletePost
 }

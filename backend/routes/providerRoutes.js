@@ -1,5 +1,5 @@
 import express from "express";
-import { addService, getProviderProfile, listProviderPosts, listProviders, listServices, providerLogin, registerProvider, updateProviderProfile } from "../controllers/providerController.js";
+import { addService, deletePost, getProviderProfile, listProviderPosts, listProviders, listServices, providerLogin, registerProvider, updateProviderProfile } from "../controllers/providerController.js";
 import authProvider from "../middlewares/authProvider.js";
 import upload from "../middlewares/multer.js";
 
@@ -13,5 +13,6 @@ providerRouter.get('/list',listProviders)
 providerRouter.post('/add-service',upload.array('postImages'),authProvider,addService)
 providerRouter.get('/list-services',listServices)
 providerRouter.get('/list-provider-posts',authProvider,listProviderPosts)
+providerRouter.post('/delete-post',authProvider,deletePost)
 
 export default providerRouter
