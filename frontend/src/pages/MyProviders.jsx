@@ -5,12 +5,8 @@ import { toast } from 'react-toastify';
 
 const MyProviders = () => {
     const navigate = useNavigate();
-    const { userProvider, removeProviderFromMyList } = useContext(ProviderContext);
+    const { userProvider } = useContext(ProviderContext);
 
-    const handleRemove = (providerId) => {
-        removeProviderFromMyList(providerId);
-        toast.success("Provider Removed")
-    };
 
     return (
         <div className='border-t border-mainColor min-h-[80vh]'>
@@ -34,7 +30,7 @@ const MyProviders = () => {
                             View Provider
                         </button>
                         <button 
-                            onClick={() => handleRemove(item._id)} 
+                            
                             className='mt-4 sm:mt-2 w-full bg-red-500 text-white text-sm py-2 hover:bg-red-300'>
                             Remove Provider
                         </button>

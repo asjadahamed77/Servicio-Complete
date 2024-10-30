@@ -10,7 +10,7 @@ const ProviderProfile = () => {
   const { providerId } = useParams();
   const { providers, providerData, setProviderData } = useContext(ProviderContext);
   const { posts } = useContext(AppContext);
-  const { addProviderToMyList } = useContext(UserContext);
+  const {addToMyProvider,userData} = useContext(UserContext)
 
   const [providerPosts, setProviderPosts] = useState([]);
 
@@ -24,6 +24,8 @@ const ProviderProfile = () => {
     setProviderData(foundProvider || null);
   };
 
+  
+
   useEffect(() => {
     fetchProviderData();
     fetchProviderPosts();
@@ -33,9 +35,7 @@ const ProviderProfile = () => {
     return <p>Loading...</p>; 
   }
 
-  const handleAddProvider = () => {
-    addProviderToMyList(providerId);  // Pass the providerId when calling addProviderToMyList
-  };
+ 
 
   return (
     <div className='border-t border-mainColor min-h-[90vh] flex flex-col lg:flex-row items-start gap-12'>
@@ -67,7 +67,7 @@ const ProviderProfile = () => {
             <p className='text-sm text-secondaryColor'>{providerData.providerAddress.line2}</p>
           </div>
           <div className='flex mt-2'>
-            <button onClick={handleAddProvider} className='w-full text-center rounded bg-gray-700 text-white text-sm py-2 hover:opacity-85'>
+            <button onClick={() => addToMyProvider(userData._id, providerId)}className='w-full text-center rounded bg-gray-700 text-white text-sm py-2 hover:opacity-85'>
               Add to My Providers
             </button>
           </div>
@@ -77,7 +77,7 @@ const ProviderProfile = () => {
       {/* ---- Provider Works ------- */}
       <div className='lg:mt-[60px] bg-white p-4 flex-1 border overflow-y-scroll md:h-[80vh] w-full grid lg:grid-cols-2 mb-12 gap-4'>
         {providerPosts.map((item, index) => (
-          <div key={index} className="p-4 border min-h-[400px]">
+          <div key={index} className="p-4 border ">
             <div className="flex gap-2 items-center cursor-pointer">
               <img className="w-16 h-16 rounded-full" src={item.providerData.providerImage} alt="user" />
               <div>
@@ -87,11 +87,11 @@ const ProviderProfile = () => {
             </div>
             <div>
               <p className="text-gray-600 italic mt-1">{item.postDescription}</p>
-              <div className='flex items-center justify-center'>
+              <div className='flex items-center justify-center mt-1'>
                 <div>
                   <FaAngleLeft className='bg-slate-100 text-2xl cursor-pointer hover:text-white hover:bg-mainColor transition-all duration-150 p-1 rounded-full border mr-1' />
                 </div>
-                {item.postImages && <img className="mt-2 w-[90%]" src={item.postImages[0]} alt="" />}
+                {item.postImages && <img className="mt-2 w-[90%]  h-[300px] object-cover " src={item.postImages[0]} alt="" />}
                 <div>
                   <FaAngleRight className='bg-slate-100 text-2xl cursor-pointer hover:text-white hover:bg-mainColor transition-all duration-150 p-1 rounded-full border ml-1' />
                 </div>

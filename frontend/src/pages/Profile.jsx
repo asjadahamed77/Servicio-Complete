@@ -289,7 +289,7 @@ const Profile = () => {
         {/* ---- User Works ------- */}
         <div className="mt-[60px] bg-white mb-12 p-4 flex-1 border overflow-y-scroll min-h-[80vh] w-full">
         <p className="font-medium ">My Profile</p>
-        <div className='mt-4 bg-white p-4 flex-1 border overflow-y-scroll md:h-[80vh] w-full grid lg:grid-cols-2 mb-12 gap-4'>
+        <div className='mt-4 bg-white p-4 flex-1 border overflow-y-scroll  w-full grid lg:grid-cols-2 mb-12 gap-4'>
         {providerPosts.map((item, index) => (
           <div key={index} className="p-4 border min-h-[400px]">
             <div className="flex gap-2 items-center cursor-pointer">
@@ -301,11 +301,11 @@ const Profile = () => {
             </div>
             <div>
               <p className="text-gray-600 italic mt-1">{item.postDescription}</p>
-              <div className='flex items-center justify-center'>
+              <div className='flex items-center justify-center mt-1'>
                 <div>
                   <FaAngleLeft className='bg-slate-100 text-2xl cursor-pointer hover:text-white hover:bg-mainColor transition-all duration-150 p-1 rounded-full border mr-1' />
                 </div>
-                {item.postImages && <img className="mt-2 w-[90%]" src={item.postImages[0]} alt="" />}
+                {item.postImages && <img className="mt-2 w-[90%]  h-[300px] object-cover " src={item.postImages[0]} alt="" />}
                 <div>
                   <FaAngleRight className='bg-slate-100 text-2xl cursor-pointer hover:text-white hover:bg-mainColor transition-all duration-150 p-1 rounded-full border ml-1' />
                 </div>

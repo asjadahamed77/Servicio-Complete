@@ -12,6 +12,8 @@ const UserContextProvider = (props) => {
 
   const [userData, setUserData] = useState(false);
 
+  const [myProviders,setMyProviders] = useState([])
+
   const getUserProfileData = async () => {
     try {
       const { data } = await axios.get(`${backendUrl}/api/user/get-profile`, {
@@ -30,26 +32,24 @@ const UserContextProvider = (props) => {
 
   const [userProvider, setUserProvider] = useState([]);
 
-  const addProviderToMyList = async (providerId) => {
+  const addToMyProvider = async(userId,providerId)=>{
+    console.log("Adding Provider:", { userId, providerId });
     try {
-      if(userToken){
-        const { data } = await axios.post(
-          `${backendUrl}/api/user/add-provider`,
-          { providerId }, 
-          { headers: { userToken } }
-        );
-        if (data.success) {
-          toast.success(data.message);
-          setUserProvider(data.providerData);
-        } else {
-          toast.error(data.message);
-        }
+      const {data} = await axios.post(backendUrl+'/api/user/add-provider',{userId,providerId},{headers:{userToken}})
+      if(data.success){
+        setMyProviders((prev) => [...prev, providerId])
+        toast.success(data.message)
+      }
+      else {
+        toast.error(data.message);
       }
     } catch (error) {
       toast.error(error.message);
       console.log(error);
     }
-  };
+  }
+
+  
 
   useEffect(() => {
     if (userToken) {
@@ -67,7 +67,7 @@ const UserContextProvider = (props) => {
     setUserData,
     userProvider,
     setUserProvider,
-    addProviderToMyList,
+    addToMyProvider
   };
 
   return (

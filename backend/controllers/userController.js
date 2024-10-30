@@ -132,16 +132,21 @@ const updateUserProfile = async (req, res) => {
 // Add to my providers
 const addToMyProvider = async(req,res)=>{
   try {
-    const {userId,providerId} = req.body
-    const providerData = await providerModel.findById(providerId).select('-providerPassword')
-    if(!providerData){
-      return res.json({success:false, message:"Provider not available"})
+    const {userId, providerId} = req.body
+    const user = await userModel.findById(userId)
+    if(!user){
+      return res.json({success:false, message:"Please Login Again"})
     }
-
+    console.log("Current Providers:", user.userProvider);
+    if (user.userProvider[providerId]) {
+      return res.json({ success: false, message: "Provider already in My Providers" });
+    }
+    user.userProvider[providerId] = true;
     
+    await user.save();
 
-    await userModel.findByIdAndUpdate(userId)
-    
+    res.json({ success: true, message: "Provider Added to My Providers" });
+
 
   } catch (error) {
     console.log(error);

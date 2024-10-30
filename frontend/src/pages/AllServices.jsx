@@ -59,11 +59,11 @@ const AllServices = () => {
             </div>
             <div>
               <p className="text-gray-600 italic mt-1">{item.postDescription}</p>
-             <div className='flex items-center justify-center'>
+             <div className='flex items-center justify-center mt-1'>
                 <div>
                 <FaAngleLeft className='bg-slate-100 text-2xl cursor-pointer hover:text-white hover:bg-mainColor transition-all duration-150 p-1 rounded-full border mr-1' />
                 </div>
-             {item.postImages  && <img className="mt-2 w-[90%] " src={item.postImages[0]} alt="" />} 
+             {item.postImages  && <img className="mt-2 w-[90%] h-[300px] object-cover " src={item.postImages[0]} alt="" />} 
              <div>
              <FaAngleRight className='bg-slate-100 text-2xl cursor-pointer hover:text-white hover:bg-mainColor transition-all duration-150 p-1 rounded-full border ml-1'  />
              </div>

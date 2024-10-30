@@ -4,8 +4,8 @@ import reviewModel from "../models/reviewModel.js";
 const addReview = async (req, res) => {
   try {
     const { userId, reviewerName, reviewerCity, reviewAbout } = req.body;
-    const reviewerImage = req.file; // Assuming multer is handling a single image upload
-
+    const reviewerImage = req.file; 
+    
     // Validate required fields
     if (!reviewerName || !reviewAbout || !reviewerCity) {
       return res.json({ success: false, message: "Please provide all fields" });

@@ -50,7 +50,7 @@ const ProviderContextProvider = (props) => {
 
   useEffect(() => {
     listProviders();
-  }, []);
+  }, [providers]);
 
   useEffect(() => {
     if (providerToken) {
