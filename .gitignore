@@ -1,0 +1,18 @@
+# Ignore all .log files
+*.log
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignore temporary files
+*.tmp
+*.swp
+
+# Ignore build directory
+build/
+
+# Ignore all .env files (e.g., environment variables)
+.env
+
+# Do not ignore specific file in an ignored directory
+!important_file.txt
