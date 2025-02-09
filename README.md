@@ -1,5 +1,7 @@
 # Servicio - Service Provider App
 
+![Servicio App](./servicio.png)
+
 **Servicio** is a MERN stack full-stack application designed to connect users with service providers. This app allows users to book providers, contact them, and manage their preferences, while providers can manage their availability, showcase their work, and connect with users.
 
 ---
@@ -42,9 +44,9 @@
 - **Git & GitHub**: Version control.
 
 ---
-## Screenshot
 
-![Servicio App](./servicio.png)
+
+
 
 ---
 
