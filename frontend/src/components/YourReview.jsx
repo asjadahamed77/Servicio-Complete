@@ -64,7 +64,7 @@ const YourReview = () => {
     }
   };
 
-  return (
+  return userToken && (
     <div className='flex flex-col items-center mt-12 pb-12'>
       {/* ------ Headings ------- */}
       <div className="text-center">
